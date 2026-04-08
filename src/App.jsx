@@ -1,8 +1,6 @@
 import React from "react";
 import { motion as Motion, animate } from "framer-motion";
 import "./App.css";
-import abdusalamPhoto from "./assets/abdusalam-optimized.jpg";
-import hennaPhoto from "./assets/henna-optimized.jpg";
 
 const SECTION_MOTION_DURATION = 0.8;
 
@@ -15,14 +13,6 @@ const stagger = {
   show: { transition: { staggerChildren: 0.22, delayChildren: 0.1 } },
 };
 
-const coupleFade = {
-  hidden: { opacity: 0, y: 16 },
-  show: { opacity: 1, y: 0, transition: { duration: SECTION_MOTION_DURATION, ease: "easeOut" } },
-};
-
-const coupleStagger = {
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } },
-};
 const PETAL_COLORS = ["#fcfaf5", "#f5e6d3", "#e2c99c", "#ffffff", "#ebe7dd", "#dcc39a"];
 const SYMBOLS = {
   pin: "\u{1F4CD}",
@@ -59,28 +49,6 @@ function Petals({ count = 12 }) {
 }
 
 
-
-function PhotoCard({ name, location, image, alt, objectPosition = "center", imageScale = 1, variants = fadeUp }) {
-  return (
-    <Motion.div className="photo-card" variants={variants}>
-      <div className="photo-frame">
-        <img
-          className="photo-image"
-          src={image}
-          alt={alt ?? `${name} portrait`}
-          width="800"
-          height="1200"
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-          style={{ objectPosition, transform: `scale(${imageScale})` }}
-        />
-      </div>
-      <div className="photo-name">{name}</div>
-      <div className="photo-location">{SYMBOLS.pin} {location}</div>
-    </Motion.div>
-  );
-}
 
 const WEDDING_DATE = new Date("2026-05-17T12:00:00");
 
@@ -284,14 +252,6 @@ export default function App() {
   const touchStartY = React.useRef(0);
 
   React.useEffect(() => {
-    // Preload images
-    [abdusalamPhoto, hennaPhoto].forEach((src) => {
-      const image = new Image();
-      image.decoding = "async";
-      image.fetchPriority = "high";
-      image.src = src;
-    });
-
     const el = scrollRootRef.current;
     if (!el) return;
 
@@ -496,34 +456,7 @@ export default function App() {
         </Motion.div>
       </section>
 
-      {/* 4. COUPLE PHOTOS */}
-      <section className="section couple-section">
-        <Motion.div variants={coupleStagger} initial="hidden" whileInView="show" viewport={{ root: scrollRootRef, once: true, amount: 0.2 }} style={{ position: "relative", zIndex: 2, width: "100%" }}>
-          <Motion.div className="couple-section-title" variants={coupleFade}>The Blessed Union</Motion.div>
-          <div className="shimmer-line" />
-          <div className="couple-photos">
-            <PhotoCard
-              name="Abdusalam"
-              location="Kondotty, Malappuram"
-              image={abdusalamPhoto}
-              objectPosition="56% 12%"
-              imageScale={1.14}
-              variants={coupleFade}
-            />
-            <Motion.div className="heart-divider" variants={coupleFade}>{SYMBOLS.ring}</Motion.div>
-            <PhotoCard
-              name="Fathima Hanna"
-              location="Beypore, Kozhikode"
-              image={hennaPhoto}
-              objectPosition="60% 10%"
-              imageScale={1.12}
-              variants={coupleFade}
-            />
-          </div>
-        </Motion.div>
-      </section>
-
-      {/* 5. EVENTS */}
+      {/* 4. EVENTS */}
       <section className="section events-section">
         <Motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ root: scrollRootRef, once: true, amount: 0.3 }} style={{ position: "relative", zIndex: 2, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Motion.h2 className="section-heading" variants={fadeUp}>
@@ -563,10 +496,10 @@ export default function App() {
         </Motion.div>
       </section>
 
-      {/* 6. COUNTDOWN */}
+      {/* 5. COUNTDOWN */}
       <CountdownSection viewport={{ root: scrollRootRef, once: true, amount: 0.4 }} />
 
-      {/* 7. PRAYER & DUA */}
+      {/* 6. PRAYER & DUA */}
       <section className="section quote2-section">
         <Motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ root: scrollRootRef, once: true, amount: 0.3 }} style={{ position: "relative", zIndex: 2, width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Motion.h2 className="section-heading" variants={fadeUp}>
@@ -598,7 +531,7 @@ export default function App() {
         </Motion.div>
       </section>
 
-      {/* 8. RSVP */}
+      {/* 7. RSVP */}
       <section className="section rsvp-section">
         <Motion.div
           className="rsvp-card"
